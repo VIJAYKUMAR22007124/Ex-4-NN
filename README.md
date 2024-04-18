@@ -1,8 +1,8 @@
 
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>B VIJAY KUMAR</H3>
+<H3>212222230173</H3>
 <H3>EX. NO.4</H3>
-<H3>DATE:</H3>
+<H3>DATE: 18-04-2024</H3>
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
@@ -174,6 +174,89 @@ print(classification_report(testing_b, predicted_values))
 
 ![image](https://github.com/VIJAYKUMAR22007124/Ex-4-NN/assets/119657657/249084f3-b30e-4556-b088-19c279ce1b1a)
 
+
+<H3>Program:</H3> 
+
+#### Import Libraries
+
+```
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+```
+
+#### Load Data
+
+```
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
+irisdata = pd.read_csv(url, names=names)
+```
+
+#### Data Exploration
+
+```
+X = irisdata.iloc[:, 0:4]
+y = irisdata.select_dtypes(include=[object])
+
+
+X.head()
+y.head()
+
+
+y.Class.unique()
+```
+
+#### Data Preprocessing
+
+```
+le = preprocessing.LabelEncoder()
+y = y.apply(le.fit_transform)
+y.head()
+```
+
+#### Train-Test Split
+
+```
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+```
+
+#### Feature Scaling
+
+```
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+```
+
+#### Model Training (MLP Classifier)
+
+```
+mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)
+mlp.fit(X_train, y_train.values.ravel())
+```
+
+#### Make Predictions
+
+```
+predictions = mlp.predict(X_test)
+print(predictions)
+```
+
+#### Model Evaluation
+
+```
+print(confusion_matrix(y_test, predictions))
+print(classification_report(y_test, predictions))
+```
+
+<H3>Output:</H3>
+
+![image](https://github.com/VIJAYKUMAR22007124/Ex-4-NN/assets/119657657/e0417d48-d953-4850-bb25-d0f049818042)
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
