@@ -116,11 +116,64 @@ Normalize our dataset.
 
 <H3>Program:</H3> 
 
-Insert your code here
+#### Import Libraries 
+
+ ```
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+ ```
+
+#### Load and Inspect Data
+
+```
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+arr = ['SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth', 'Species']
+df = pd.read_csv(url, names=arr)
+print(df.head())
+```
+
+#### Prepare Data
+
+```
+a = df.iloc[:, 0:4]
+b = df.iloc[:, 4:5]
+training_a, testing_a, training_b, testing_b = train_test_split(a, b, test_size=0.25)
+```
+
+#### Data Preprocessing
+
+```
+myscaler = StandardScaler()
+myscaler.fit(training_a)
+training_a = myscaler.transform(training_a)
+testing_a = myscaler.transform(testing_a)
+```
+
+#### Define and Train Model
+
+```
+m1 = MLPClassifier(hidden_layer_sizes=(12, 13, 14), activation='relu', solver='adam', max_iter=2500)
+m1.fit(training_a, training_b.values.ravel())
+```
+
+#### Make Predictions and Evaluate Model
+
+```
+
+predicted_values = m1.predict(testing_a)
+print(confusion_matrix(testing_b, predicted_values))
+print(classification_report(testing_b, predicted_values))
+
+```
+
 
 <H3>Output:</H3>
 
-Show your results here
+![image](https://github.com/VIJAYKUMAR22007124/Ex-4-NN/assets/119657657/249084f3-b30e-4556-b088-19c279ce1b1a)
+
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
